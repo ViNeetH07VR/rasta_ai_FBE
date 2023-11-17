@@ -11,7 +11,6 @@ const metaDataSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-},
   location: {
     type: {
       latitude: {
@@ -23,8 +22,9 @@ const metaDataSchema = new mongoose.Schema({
         required: true,
       },
     }
-  },
-  ai_output: {
+  }
+},
+ ai_output: {
     type: {
       class_labels: {
         type: [String],

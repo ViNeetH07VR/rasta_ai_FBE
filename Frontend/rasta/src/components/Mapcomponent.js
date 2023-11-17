@@ -2,19 +2,30 @@ import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
-
+import Sidebar from './Sidebarcomponent';
+import custommmarker from '../assets/markers/custommarker.png'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoicmlzaGlrYS0xOTAxMDEiLCJhIjoiY2xvbXJieHJ6MTVncTJpczJhZnh4N3Z6dSJ9.btunGukUKM2vCeMJtrOwuw';
 
 //index.html has the reference linkage to the magbox-gl
 
 const Mapcomponent=()=>{
-    console.log("mapbox")
+    console.log("mapbox")   
 const mapContainer = useRef(null);
 const map = useRef(null);
 const [lng, setLng] = useState(78.381914);
 const [lat, setLat] = useState(17.450764);
-const [zoom, setZoom] = useState(12);
+const [zoom, setZoom] = useState(15);
+const [showSidebar, setShowSidebar] = useState(false);
+const [imagePath, setImagePath] = useState('');
+const [routeNames, setRouteNames] = useState([]);
+const[latitude,setLatitude]=useState([]);
+const[longitude,setLongitude]=useState([]);
+const [marker, setMarker] = useState(null);
+const handleSidebarToggle = () => {
+  setShowSidebar(!showSidebar);
+};
+
 
 //routeGeoJSON is a static data for representation
 const routeGeoJSON = {
@@ -59,12 +70,12 @@ useEffect(() => {
         zoom: zoom,
     });
 
-    const directions = new MapboxDirections({
-        accessToken: mapboxgl.accessToken,
-        unit: 'metric', 
-    });
+    // const directions = new MapboxDirections({
+    //     accessToken: mapboxgl.accessToken,
+    //     unit: 'metric', 
+    // });
 
-    map.current.addControl(directions, 'top-left');
+    // map.current.addControl(directions, 'top-left');
 
     map.current.on('load', () => {
        
@@ -134,7 +145,55 @@ useEffect(() => {
         
         map.current.on('click', function (e) {
         const clickedCoordinates = e.lngLat;
+        handleSidebarToggle()//call the handlesidebarToggle
         console.log('Clicked Coordinates:', clickedCoordinates);
+        try {
+            axios.get(`http://localhost:2700/fetch/`, {
+              params: {
+                latitude: 78.37982,
+                longitude: 17.450771,
+              },
+            })
+            .then(response => {
+              // Handle the response data here
+              console.log("res",response)
+              const imagedetails=response.data.data.result.image_details
+              console.log('Response from server:', response);
+              const path = imagedetails.filename;
+            //   const temp1=response.data.data.result.image_details.location.latitude
+            //   const temp2=response.data.data.result.image_details.location.longitude
+              const imageUrl = `http://localhost:2700/${encodeURIComponent(path)}`;
+      setImagePath(imageUrl);
+      const temp1=clickedCoordinates.lat
+      const temp2=clickedCoordinates.lng
+      setLatitude(temp1);
+      setLongitude(temp2);
+      const customMarkerElement = document.createElement('div');
+      customMarkerElement.className = 'custom-marker'; // Add a class for styling
+  
+      // Add your custom marker image
+      customMarkerElement.style.backgroundImage = `url(${custommmarker})`;
+      customMarkerElement.style.width = '32px'; // Set the width based on your image size
+      customMarkerElement.style.height = '32px';
+      const newMarker = new mapboxgl.Marker()
+      .setLngLat([78.380804,
+        17.451769])
+      .addTo(map.current);
+
+    setMarker(newMarker);
+      // Now imagePath is set, and you can log it
+      console.log("imagepath", imagePath);
+              
+            })
+            .catch(error => {
+              // Handle errors here
+              console.error('Error making GET request:', error.message);
+            });
+          } catch (error) {
+            console.error('Error outside of Axios request:', error.message);
+          }
+          console.log("imagepath22222222222", imagePath);
+          
         
         const osmApiUrl = `https://overpass-api.de/api/interpreter?data=[out:json];way(around:10,${clickedCoordinates.lat},${clickedCoordinates.lng})[highway];out;`;
 
@@ -149,6 +208,7 @@ useEffect(() => {
     const wayIds = roadDetails.id;
     const routeIds = roadDetails.tags.route_id;
     const routeNames = roadDetails.tags.name;
+    setRouteNames(routeNames);
 
     const fetchNodeDetails = async (nodeId) => {
         const apiUrl = `https://overpass-api.de/api/interpreter?data=[out:json];node(${nodeId});out;`;
@@ -160,9 +220,9 @@ useEffect(() => {
             if (data.elements && data.elements.length > 0) {
                 const node = data.elements[0];
                 const coordinates = { lat: node.lat, lon: node.lon };
-                const marker = new mapboxgl.Marker()
-                .setLngLat({ lng: coordinates.lon, lat: coordinates.lat })
-                .addTo(map.current);
+                // const marker = new mapboxgl.Marker()
+                // .setLngLat({ lng: coordinates.lon, lat: coordinates.lat })
+                // .addTo(map.current);
                 return coordinates;
             }
     
@@ -185,18 +245,18 @@ useEffect(() => {
         
         const coordinatesArray = await Promise.all(coordinatesPromises);
         console.log('Coordinates for nodes:', coordinatesArray);
-        coordinatesArray.forEach(async (coordinates) => {
-            try {
-              const response = await axios.get(`http://localhost:5000/fetch/`, {
-                lat: 78.37982,
-                lon: 17.450771,
-              });
+        // coordinatesArray.forEach(async (coordinates) => {
+        //     try {
+        //       const response = await axios.get(`http://localhost:2700/fetch/`, {
+        //         lat: 78.37982,
+        //         lon: 17.450771,
+        //       });
         
-              console.log('Response from server:', response.data,response);
-            } catch (error) {
-              console.error('Error making GET request:', error.message);
-            }
-          });
+        //       console.log('Response from server:', response.data,response);
+        //     } catch (error) {
+        //       console.error('Error making GET request:', error.message);
+        //     }
+        //   });
         
     };
     
@@ -220,15 +280,15 @@ useEffect(() => {
                 const coordinates2=await fetchNodeDetails(last)
                 console.log("cordinates",coordinates1,coordinates2)
                 
-                const marker2 = new mapboxgl.Marker({color:'red'})
+                // const marker2 = new mapboxgl.Marker({color:'red'})
                 
-                .setLngLat({ lng: coordinates2.lon, lat: coordinates2.lat })
-                .addTo(map.current);
+                // .setLngLat({ lng: coordinates2.lon, lat: coordinates2.lat })
+                // .addTo(map.current);
 
-                const marker = new mapboxgl.Marker({color:'red'})
+                // const marker = new mapboxgl.Marker({color:'red'})
                 
-                .setLngLat({ lng: coordinates1.lon, lat: coordinates1.lat })
-                .addTo(map.current);
+                // .setLngLat({ lng: coordinates1.lon, lat: coordinates1.lat })
+                // .addTo(map.current);
                 // const coordinates = way.geometry.map((node) => ({ lat: node.lat, lon: node.lon }));
                 return coordinates1;
             }
@@ -292,11 +352,21 @@ fetch(residentialRoadsUrl)
         }
     
         return undefined;}
-}, [lng,lat,zoom]);
+}, [lng,lat,zoom,imagePath]);
+useEffect(() => {
+    // This effect will log the imagePath whenever it changes
+    console.log("imagepath", imagePath);
+  }, [imagePath]); 
 return (
     <div>
     <div ref={mapContainer} className="map-container"/>
-    
+    {showSidebar && imagePath && routeNames&& latitude && longitude &&<Sidebar showSidebar={showSidebar} imagePath={imagePath} routeNames={routeNames} latitude={latitude} longitude={longitude} handleSidebarToggle={handleSidebarToggle} />}
+
+    {/* <div>
+      <h1>Image Display</h1>
+      {imagePath && <img src={imagePath} alt="Image" />}
+    </div>
+     */}
     </div>
   );
 }

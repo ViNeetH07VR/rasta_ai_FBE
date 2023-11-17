@@ -18,6 +18,8 @@ mongoose.connect(mongoDbUrl).then(db =>{
 mongoose.set('strictQuery', false);
 module.exports=app;
 app.use(express.json());
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 const metaData=require("./src/routes/metaData")
 app.use('/',metaData)
 
