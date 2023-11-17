@@ -3,7 +3,7 @@ import axios from 'axios';
 import mapboxgl from 'mapbox-gl';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import Sidebar from './Sidebarcomponent';
-import custommmarker from '../assets/markers/custommarker.png'
+import custommarker from '../assets/markers/custommarker.png'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoicmlzaGlrYS0xOTAxMDEiLCJhIjoiY2xvbXJieHJ6MTVncTJpczJhZnh4N3Z6dSJ9.btunGukUKM2vCeMJtrOwuw';
 
@@ -21,7 +21,6 @@ const [imagePath, setImagePath] = useState('');
 const [routeNames, setRouteNames] = useState([]);
 const[latitude,setLatitude]=useState([]);
 const[longitude,setLongitude]=useState([]);
-const [marker, setMarker] = useState(null);
 const handleSidebarToggle = () => {
   setShowSidebar(!showSidebar);
 };
@@ -168,19 +167,7 @@ useEffect(() => {
       const temp2=clickedCoordinates.lng
       setLatitude(temp1);
       setLongitude(temp2);
-      const customMarkerElement = document.createElement('div');
-      customMarkerElement.className = 'custom-marker'; // Add a class for styling
-  
-      // Add your custom marker image
-      customMarkerElement.style.backgroundImage = `url(${custommmarker})`;
-      customMarkerElement.style.width = '32px'; // Set the width based on your image size
-      customMarkerElement.style.height = '32px';
-      const newMarker = new mapboxgl.Marker()
-      .setLngLat([78.380804,
-        17.451769])
-      .addTo(map.current);
-
-    setMarker(newMarker);
+                
       // Now imagePath is set, and you can log it
       console.log("imagepath", imagePath);
               
@@ -194,6 +181,41 @@ useEffect(() => {
           }
           console.log("imagepath22222222222", imagePath);
           
+          try {
+            axios.get(`http://localhost:2700/get/`, {
+              params: {
+                latitude: 17.45371,
+                longitude: 78.36987,
+              },
+            })
+            .then(response => {
+                console.log("multiple data",response)
+                const data = response.data.data.result;
+                data.forEach((item) => {
+                    const location = item.image_details.location;
+                    // const popupContent = `<h3>${item.image_details.filename}</h3><p>Timestamp: ${item.timestamp}</p>`;
+                  
+                    // // Create a marker
+                    // const marker = new mapboxgl.Marker()
+                    //   .setLngLat([location.longitude, location.latitude])
+                    //   .setPopup(new mapboxgl.Popup().setHTML(popupContent))
+                    //   .addTo(map.current);
+                    const customMarkerElement = document.createElement('div');
+                    customMarkerElement.style.width = '32px';
+                    customMarkerElement.style.height = '32px';
+                    customMarkerElement.style.backgroundImage = `url(${custommarker})`;
+                    customMarkerElement.style.backgroundSize = 'cover'; // Ensure the image covers the marker
+                    customMarkerElement.style.cursor = 'pointer'; // Optional: Change cursor on hover
+                
+                    // Create a marker with the custom element
+                    const marker = new mapboxgl.Marker(customMarkerElement)
+                        .setLngLat([location.longitude, location.latitude])
+                        .addTo(map.current);
+                  });
+            }
+            )}catch(error){
+                console.error('Error outside of Axios request:', error.message);
+            }
         
         const osmApiUrl = `https://overpass-api.de/api/interpreter?data=[out:json];way(around:10,${clickedCoordinates.lat},${clickedCoordinates.lng})[highway];out;`;
 

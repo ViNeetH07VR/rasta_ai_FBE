@@ -147,8 +147,57 @@ const fetchmetaData = async (req, res) => {
 //     return res.status(500).send({ message: "Internal Server Error" });
 //   }
 // };
+// 
+const getmetaData = async (req, res) => {
+  try {
+    const { latitude, longitude } = req.query;
+
+    console.log('Received coordinates:', latitude, longitude);
+
+    if (latitude === undefined || longitude === undefined || isNaN(parseFloat(latitude)) || isNaN(parseFloat(longitude))) {
+      console.log('Invalid or missing coordinates');
+      return res.status(400).send({ message: 'Invalid or missing coordinates' });
+    }
+
+    const parsedLatitude = parseFloat(latitude).toFixed(2);
+    const parsedLongitude = parseFloat(longitude).toFixed(2);
+
+    console.log("coordinates", parsedLatitude, parsedLongitude);
+
+    const condition = {
+      'image_details.location.latitude': {
+        $gte: parseFloat(parsedLatitude) - 0.01,
+        $lte: parseFloat(parsedLatitude) + 0.01,
+      },
+      'image_details.location.longitude': {
+        $gte: parseFloat(parsedLongitude) - 0.01,
+        $lte: parseFloat(parsedLongitude) + 0.01,
+      },
+    };
+    const result = await metaData.find(condition);
+    console.log("result", result);
+
+    if (result) {
+      return res.status(200).send({
+        message: "Document Found",
+        data: {
+          result
+        },
+      });
+    } else {
+      console.log('Document not found');
+      return res.status(404).send({ message: 'Document not found' });
+    }
+  } catch (error) {
+    console.error("Error finding document:", error);
+    return res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+
 
 module.exports={
     fetchmetaData,
-    insertmetaData
+    insertmetaData,
+    getmetaData
 }
