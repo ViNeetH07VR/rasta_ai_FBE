@@ -1,0 +1,89 @@
+
+
+div,h2,p{
+    color: black;
+}
+.background
+{
+    height: 200px;
+    background-color: var(--primary-color);
+    z-index: 0;
+    position: absolute;
+    width: 100%;
+}
+h3{
+    
+    position: relative;
+    margin-top: 2%;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    color: white;
+    font-family: Inter;
+font-size: 20px;
+font-weight: 700;
+line-height: 24px;
+letter-spacing: 0em;
+text-align: left;
+
+}
+p{
+    margin-left: 20px;
+    margin-bottom: 20px;
+    color: white;
+    font-family: Inter;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 15px;
+    text-align: left;
+    }
+.front_card {
+    z-index: 1;
+    background-color: var(--secondary-color);
+    height: 100vh;
+    margin-top: 10%;
+    border-radius: 5%;
+    box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.5);
+}
+
+.search_space
+{
+    position: absolute;
+    margin: 10%;
+    margin-top:10% ;
+    justify-content: center;
+}
+/* Your existing CSS for other elements */
+
+.slider {
+    width: 60%;
+    overflow: hidden;
+    /* Add any additional styling you need for the slider */
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    /* Adjust alignment and spacing as needed */
+  }
+  
+  .col {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    cursor: pointer;
+    /* Add any additional styling you need for the columns */
+  }
+  
+  .col.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 5px;
+    background-color: var(--primary-color); /* Orange color as an example */
+  }
+  
+  

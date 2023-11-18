@@ -1,0 +1,370 @@
+/* Add this to your existing CSS file or style section in the HTML file */
+
+/* New styles for navigation items and buttons */
+.nav-item,
+.nav-item.active,
+.feature-btn,
+.condition-btn {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+  display: inline-block;
+  width: auto; /* Allow the button to take its natural width */
+  background-color: var(--text-color);
+  color: var(--main-bg-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-item.active,
+.feature-btn.active,
+.condition-btn.active {
+  background-color: var(--theme-color);
+  color: var(--background-color);
+}
+
+/* New styles for colored circles */
+/* ... (existing styles for circles) ... */
+
+/* New styles for checkboxes */
+.col input[type="checkbox"]:checked {
+  background-color: var(--theme-color);
+  border-color: var(--theme-color);
+  color: var(--background-color);
+}
+
+/* New styles for feature and condition buttons */
+.feature-btn,
+.condition-btn {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.feature-btn.active,
+.condition-btn.active {
+  background-color: var(--theme-color);
+  color: var(--background-color);
+}
+
+/* Add this to your existing CSS file or style section in the HTML file */
+
+/* New styles for the container */
+.otherconditions {
+  overflow-y: auto; /* Add vertical scrollbar when content exceeds height */
+  max-height: 300px; /* Adjust the maximum height as needed */
+}
+
+.con{
+position: absolute;
+    margin-top:160px ;
+}
+h4{
+    font-family: Inter;
+font-size: 12px;
+font-weight: 600;
+line-height: 15px;
+letter-spacing: 0em;
+text-align: left;
+
+    margin-left: 5px;
+}
+.col {
+    display: flex;
+    width: 280px; /* You can adjust this width based on your design */
+
+    align-items: center;
+    margin-bottom: 10px; /* Add space between each level */
+}
+
+/* New styles for colored circles */
+.orange-circle {
+    width: 20px;
+    height: 20px;
+    background-color: orange;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.darkGreen-circle {
+    width: 20px;
+    height: 20px;
+    background-color: darkgreen;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.light_green-circle {
+    width: 20px;
+    height: 20px;
+    background-color: rgb(15, 210, 15);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+.light_green-rectangle {
+    width: 20px;
+    height: 10px;
+    background-color: lightgreen;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.dark_yellow-circle {
+    width: 20px;
+    height: 20px;
+    background-color: darkgoldenrod;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.light_red-circle {
+    width: 20px;
+    height: 20px;
+    background-color: yellow;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.red-circle {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.grey-circle {
+    width: 20px;
+    height: 20px;
+    background-color: grey;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* New styles for triangles */
+.orange-triangle {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid orange;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.yellow-triangle {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid yellow;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* New styles for rectangles */
+.darkGreen-rectangle {
+    width: 20px;
+    height: 20px;
+    background-color: darkgreen;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+div
+{
+    font-family: Inter;
+font-size: 12px;
+font-weight: 400;
+line-height: 15px;
+letter-spacing: 0em;
+text-align: left;
+
+
+}
+
+.light_green-rectangle {
+    width: 25px;
+    height: 10px;
+    background-color: lightgreen;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.dark_yellow-rectangle {
+    width: 25px;
+    height: 10px;
+    background-color: darkgoldenrod;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.red-rectangle {
+    width: 25px;
+    height: 10px;
+    background-color: red;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.grey-rectangle {
+    width: 25px;
+    height: 10px;
+    background-color: grey;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* New styles for navigation items */
+.nav-item {
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+/* New styles for colored circles */
+.navyblue-circle {
+width: 20px;
+height: 20px;
+background-color: navy;
+border-radius: 50%;
+display: inline-block;
+margin-right: 10px;
+vertical-align: middle;
+}
+.dark_yellow-circle{}
+
+.black-circle {
+width: 20px;
+height: 20px;
+background-color: black;
+border-radius: 50%;
+display: inline-block;
+margin-right: 10px;
+vertical-align: middle;
+}.filter_main_box {
+overflow-y: auto;
+max-height: 300px; /* Adjust the maximum height as needed */
+}
+
+.col {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.leftside {
+display: flex;
+align-items: center;
+margin-right: 10px; /* Adjust the margin as needed for space between "leftside" and checkbox */
+}
+
+/* Adjust checkbox styling for proper alignment */
+.col input[type="checkbox"] {
+transform: scale(1.5); /* Adjust the scale factor for checkbox size */
+margin-top: 2px; 
+margin-right: 5px; /* Adjust the spacing between checkboxes */
+}
+
+/* Additional style to ensure checkboxes are on the right side */
+
+/* ... Rest of your existing CSS code ... */
+
+
+/*
+/* Add this to your existing CSS file or style section in the HTML file */
+
+/* New styles for navigation items and buttons */
+.nav-item, .nav-item.active {
+cursor: pointer;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+margin-right: 10px;
+display: inline-block;
+width: auto; /* Allow the button to take its natural width */
+background-color: var(--text-color);
+color: var(--main-bg-color);
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-item.active {
+background-color: var(--theme-color);
+color: var(--background-color);
+}
+
+/* New styles for colored circles */
+/* ... (existing styles for circles) ... */
+
+/* New styles for checkboxes */
+.col input[type="checkbox"]:checked {
+background-color: var(--theme-color);
+border-color: var(--theme-color);
+color: var(--background-color);
+}
+/* Add this to your existing CSS file or style section in the HTML file */
+
+/* New styles for navigation items and buttons */
+.nav-item, .nav-item.active, .feature-btn, .condition-btn {
+cursor: pointer;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+margin-right: 10px;
+display: inline-block;
+width: auto; /* Allow the button to take its natural width */
+background-color: var(--text-color);
+color: var(--main-bg-color);
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-item.active, .feature-btn.active, .condition-btn.active {
+background-color: var(--theme-color);
+color: var(--background-color);
+}
+
+/* New styles for colored circles */
+/* ... (existing styles for circles) ... */
+
+/* New styles for checkboxes */
+.col input[type="checkbox"]:checked {
+background-color: var(--theme-color);
+border-color: var(--theme-color);
+color: var(--background-color);
+}
+
+/* New styles for feature and condition buttons */
+.feature-btn, .condition-btn {
+width: 100%;
+margin-bottom: 10px;
+}
+
+.feature-btn.active, .condition-btn.active {
+background-color: var(--theme-color);
+color: var(--background-color);
+}
+

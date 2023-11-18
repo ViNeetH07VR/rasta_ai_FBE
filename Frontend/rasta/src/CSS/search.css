@@ -1,0 +1,17 @@
+.search
+{
+    padding: 6px;
+border: none;
+margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+
+}
+.searchOutline
+{    width: 100%;
+
+    border: 10px black;
+    border-radius: 30%;
+
+
+}

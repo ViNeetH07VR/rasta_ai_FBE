@@ -4,6 +4,29 @@ import mapboxgl from 'mapbox-gl';
 import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions';
 import Sidebar from './Sidebarcomponent';
 import custommarker from '../assets/markers/custommarker.png'
+import stop from '../assets/markers/stop.png'
+import nobicycle from '../assets/markers/nobicycle.png'
+import four from '../assets/markers/four.png'
+import speed from '../assets/markers/speed.png'
+const customMarkerIcons = [
+   custommarker,
+   four,
+   stop,
+   custommarker,
+    nobicycle,
+    four,
+    speed,
+    custommarker,
+    custommarker,
+    stop,
+    nobicycle,
+    speed,
+    custommarker,
+    custommarker,
+    custommarker,
+    custommarker
+
+  ];
 
 mapboxgl.accessToken = 'pk.eyJ1IjoicmlzaGlrYS0xOTAxMDEiLCJhIjoiY2xvbXJieHJ6MTVncTJpczJhZnh4N3Z6dSJ9.btunGukUKM2vCeMJtrOwuw';
 
@@ -115,19 +138,30 @@ useEffect(() => {
                 )
                 .addTo(map.current);
         });
+        const customMarkerElement = document.createElement('div');
+        customMarkerElement.style.width = '32px';
+        customMarkerElement.style.height = '32px';
+       
+        customMarkerElement.style.backgroundImage = `url(${stop})`;
+        customMarkerElement.style.backgroundSize = 'cover'; // Ensure the image covers the marker
+        customMarkerElement.style.cursor = 'pointer'; // Optional: Change cursor on hover
 
         routeGeoJSON.features[0].geometry.coordinates.forEach((coordinate) => {
-            const marker = new mapboxgl.Marker()
+            const marker = new mapboxgl.Marker(customMarkerElement)
                 .setLngLat(coordinate)
                 .addTo(map.current);
+                const popupContent = '<h1>Stop</h1><p>stop sign</p>';
+                const popup = new mapboxgl.Popup({ offset: [0, -15] }).setHTML(popupContent);
+                
+                marker.setPopup(popup);
+                
             
             
-            
-            const popup = new mapboxgl.Popup({ offset: [0, -15]})
-                .setHTML('<img src="../src/assets/images/pothholes.jpg" alt="Pothhole Image" />');
+            // const popup = new mapboxgl.Popup({ offset: [0, -15]})
+            //     .setHTML('<img src="../src/assets/images/pothholes.jpg" alt="Pothhole Image" />');
     
           
-            marker.setPopup(popup);
+            // marker.setPopup(popup);
         });
 
         // Changing the cursor style when hovering over the route.
@@ -191,7 +225,7 @@ useEffect(() => {
             .then(response => {
                 console.log("multiple data",response)
                 const data = response.data.data.result;
-                data.forEach((item) => {
+                data.forEach((item,index) => {
                     const location = item.image_details.location;
                     // const popupContent = `<h3>${item.image_details.filename}</h3><p>Timestamp: ${item.timestamp}</p>`;
                   
@@ -203,7 +237,10 @@ useEffect(() => {
                     const customMarkerElement = document.createElement('div');
                     customMarkerElement.style.width = '32px';
                     customMarkerElement.style.height = '32px';
-                    customMarkerElement.style.backgroundImage = `url(${custommarker})`;
+                    if(item.image_details.filename=="stop.jpg")
+                    {customMarkerElement.style.backgroundImage = `url(${stop})`;}
+                    else{
+                    customMarkerElement.style.backgroundImage = `url(${customMarkerIcons[index]})`;}
                     customMarkerElement.style.backgroundSize = 'cover'; // Ensure the image covers the marker
                     customMarkerElement.style.cursor = 'pointer'; // Optional: Change cursor on hover
                 

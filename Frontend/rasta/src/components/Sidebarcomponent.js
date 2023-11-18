@@ -125,7 +125,10 @@ const Sidebar = ({ showSidebar,routeNames,imagePath, handleSidebarToggle,latitud
             bgcolor: '#FAD0B4',
             
           },position: 'relative',
-          boxShadow: '0px 14px 11px -17px rgba(0, 0, 0, 0.57)'
+          boxShadow: '0px 14px 11px -17px rgba(0, 0, 0, 0.57)',
+          display: 'flex',
+          alignItems: 'center', // Center align vertically
+          justifyContent: 'center', // Center align horizontally
           }}>
      <img
         src={directionicon}
@@ -139,6 +142,11 @@ const Sidebar = ({ showSidebar,routeNames,imagePath, handleSidebarToggle,latitud
           transform: 'translate(-50%, -50%)',
         }}
       />
+      <Typography variant="h6" sx={{ color: '#86878B',paddingRight:'40%',font:'Inter',fontSize:'12px' }}>
+                  Direction
+                  <br></br>
+                    
+                </Typography>
     </Box>
     <Box component="section" sx={{  width:320,
         marginTop:'-3px',

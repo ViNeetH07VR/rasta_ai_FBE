@@ -1,0 +1,121 @@
+/* Header.css */
+
+.header {
+  position: relative;
+}.logo
+{
+  width: 85px;
+  margin-right: 60px;
+}
+img{
+  width: 25px;
+  height: 25px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: white;
+  z-index: 2; /* Ensure the header is above the sidebar */
+}
+
+button {
+  cursor: pointer;
+}
+
+.sidebar {
+  width: 20%;
+  height: 100%;
+  position: fixed;
+  top: calc(50px + 10px); /* Adjusted the top position dynamically based on header height */
+  left: -20%; /* Adjusted the initial left position */
+  background-color: #ffffff;
+  z-index: 1;
+  color: white;
+  transition: left 0.3s ease;
+}
+
+.sidebar-open {
+  left: 0;
+}
+
+.sidebar-content {
+  position: relative;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: block; /* Make the list items display in a row */
+}
+nav ul li {
+  margin-right: 10px; /* Add space between navigation items */
+  float: left;
+  padding: 10px;
+  cursor: pointer;
+}
+
+nav .nav_toggle
+{
+  display: flex;
+  right: 0;
+
+}
+
+/* Add styles for the toggle icon on the right side */
+.toggle-icon {
+display: flex;
+float: right;
+  padding: 10px;
+  cursor: pointer;
+}
+
+nav li:hover {
+  background-color: var(--primary-color);
+}
+
+.toggle-btn {
+  cursor: pointer;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 10%; 
+   background-color: var(--primary-color);
+
+  color: white;
+  top: 50%;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.toggle-btn.left {
+  left: 0;
+}
+
+.toggle-btn.right {
+  right: -12%;
+  z-index: -1;
+}
+
+.toggle-btn span {
+  font-size: 20px;
+}
+.nav_toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.toggle-icon {
+  font-size: 24px;
+  color: var(--primary-color);
+  cursor: pointer;
+}
