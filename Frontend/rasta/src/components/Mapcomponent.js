@@ -100,7 +100,7 @@ useEffect(() => {
     // map.current.addControl(directions, 'top-left');
 
     map.current.on('load', () => {
-       
+
         console.log("On loading",routeGeoJSON)
         map.current.addSource('routes', {
             type: 'geojson',
@@ -237,10 +237,8 @@ useEffect(() => {
                     const customMarkerElement = document.createElement('div');
                     customMarkerElement.style.width = '32px';
                     customMarkerElement.style.height = '32px';
-                    if(item.image_details.filename=="stop.jpg")
-                    {customMarkerElement.style.backgroundImage = `url(${stop})`;}
-                    else{
-                    customMarkerElement.style.backgroundImage = `url(${customMarkerIcons[index]})`;}
+                   
+                    customMarkerElement.style.backgroundImage = `url(${customMarkerIcons[index]})`;
                     customMarkerElement.style.backgroundSize = 'cover'; // Ensure the image covers the marker
                     customMarkerElement.style.cursor = 'pointer'; // Optional: Change cursor on hover
                 
@@ -377,6 +375,9 @@ useEffect(() => {
     //     }
     // });
 
+    // roadNodes.forEach((nodeId) => {
+    //     console.log('Node ID:', nodeId);
+    //   });
     // Process the obtained information
     console.log('Way IDs:', wayIds);
     console.log('Route IDs:', routeIds);
@@ -384,6 +385,109 @@ useEffect(() => {
     console.log('Roadnodes:', roadNodes);
 })
 .catch(error => console.error('Error fetching OSM data:', error));;
+
+// const getRoadNamesInHyderabad = async () => {
+//     const boundingBox = '78.2176,17.1966,78.6070,17.6078';
+//     const url = 'https://overpass-api.de/api/interpreter';
+  
+//     try {
+//       const response = await fetch(`${url}?data=[out:json];
+//         (
+//             way[highway](${boundingBox});
+//         );
+//         out body;`);
+  
+//       const data = await response.json();
+//       console.log('Datas:', data.elements[0]);
+
+//   const fetchNodeDetails = async (nodeId) => {
+//   const apiUrl = `https://overpass-api.de/api/interpreter?data=[out:json];node(${nodeId});out;`;
+
+//   try {
+//     const response = await fetch(apiUrl);
+//     const data = await response.json();
+
+//     if (data.elements && data.elements.length > 0) {
+//       const node = data.elements[0];
+//       return { lat: node.lat, lon: node.lon };
+//     }
+
+//     return null;
+//   } catch (error) {
+//     console.error('Error fetching node details:', error);
+//     return null;
+//   }
+// };
+
+// const coordinates = await Promise.all(
+//   data.elements
+//     .filter((element) => element.type === 'way' && element.nodes)
+//     .map(async (element) => {
+//       const nodesDetails = await Promise.all(
+//         element.nodes.map(async (nodeId) => {
+//           return await fetchNodeDetails(nodeId);
+//         })
+//       );
+
+//       return nodesDetails;
+//     })
+// );
+
+// console.log("Coordinates:", coordinates);
+
+// // Flatten the array if needed
+// const flattenedCoordinates = [].concat(...coordinates);
+// console.log("Flattened Coordinates:", flattenedCoordinates);
+// if (!map.getSource('highlighted-ways')) {
+//   map.addSource('highlighted-ways', {
+//     type: 'geojson',
+//     data: {
+//       type: 'FeatureCollection',
+//       features: [], // Initially, an empty feature collection
+//     },
+//   });
+// }
+
+// // Create a GeoJSON feature for the line string
+// const highlightedFeature = {
+//   type: 'Feature',
+//   properties: {},
+//   geometry: {
+//     type: 'LineString',
+//     coordinates: flattenedCoordinates,
+//   },
+// };
+
+// // Set the data for the source
+// map.getSource('highlighted-ways').setData(highlightedFeature);
+
+// // Check if the layer already exists, if not, add it to the map
+// if (!map.getLayer('highlighted-ways-layer')) {
+//   map.addLayer({
+//     id: 'highlighted-ways-layer',
+//     type: 'line',
+//     source: 'highlighted-ways',
+//     layout: {
+//       'line-join': 'round',
+//       'line-cap': 'round',
+//     },
+//     paint: {
+//       'line-color': 'red',
+//       'line-width': 4,
+//     },
+//   });
+// }
+
+  
+//       console.log('Road Names in Hyderabad:', coordinates);
+//     } catch (error) {
+//       console.error('Error fetching road names:', error);
+//     }
+//   };
+  
+//   getRoadNamesInHyderabad();
+
+  
 
 const residentialRoadsUrl = `https://overpass-api.de/api/interpreter?data=[out:json];way(around:10,${clickedCoordinates.lat},${clickedCoordinates.lng})[highway=residential];out;`;
 
@@ -398,7 +502,7 @@ fetch(residentialRoadsUrl)
 
     });
     function getRouteIds(roadDetails) {
-        // Check if the road is part of a relation (route)
+        // Check if the road is part     of a relation (route)
         if (roadDetails.tags && roadDetails.tags.type === 'route' && roadDetails.tags.route_id) {
             return [roadDetails.tags.route_id];
         }
@@ -411,6 +515,8 @@ fetch(residentialRoadsUrl)
         }
     
         return undefined;}
+          
+      
 }, [lng,lat,zoom,imagePath]);
 useEffect(() => {
     // This effect will log the imagePath whenever it changes
