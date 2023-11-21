@@ -4,15 +4,19 @@ import Mapcomponent from '../src/components/Mapcomponent';
 import Sidenavbar from './components/Sidenavbar';
 import Header from './components/Header';
 import Body from './components/Body';
+import Sidebar from './Component/Sidebar';
 
 export default function App() {
   return (
     <div className="App">
-      <div>  <Header/></div>
+{  /*    <div>  <Header/></div>
     
       <Mapcomponent/>
       
-      
+  */ } 
+
+
+  <Sidebar/>    
     </div>
   );
 }
